@@ -5,7 +5,6 @@ import java.sql.ResultSet;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -48,8 +47,8 @@ public class employeeDAO {
         List<Employee> employees = new ArrayList<>();
 
         try (Connection sqlConn = DatabaseConnectionUtil.getConnection()) {
-            String sqlfetch = "SELECT id,firstName,lastName,mobileNumber,emailID,joiningDate,activeStatus FROM employee";
-            Statement stmt = sqlConn.createStatement();
+            String sqlfetch = "SELECT ?,?,?,?,?,?,? FROM employee";
+            PreparedStatement stmt = sqlConn.prepareStatement(sqlfetch);
             ResultSet rs = stmt.executeQuery(sqlfetch);
 
             while (rs.next()) {
