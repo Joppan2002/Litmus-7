@@ -2,6 +2,8 @@ package com.litmus7.employeemanager.app;
 
 import com.litmus7.employeemanager.controller.*;
 import com.litmus7.employeemanager.dto.Employee;
+import com.litmus7.exceptions.EmployeeNotFoundException;
+import com.litmus7.exceptions.EmployeeServiceException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +15,7 @@ import java.util.Scanner;
 
 
 public class EmployeeManagerApp {
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException, EmployeeServiceException, EmployeeNotFoundException {
         Scanner in = new Scanner(System.in);
         int ch;
 
