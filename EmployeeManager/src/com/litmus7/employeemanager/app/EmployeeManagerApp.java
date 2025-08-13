@@ -6,6 +6,8 @@ import com.litmus7.employeemanager.dto.Employee;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 
@@ -87,6 +89,7 @@ public class EmployeeManagerApp {
         		+ "\nEnter your choice");
         
         int ch2=in.nextInt();
+        EmployeeController controller=new EmployeeController();
         
         switch(ch2)
         {
@@ -108,11 +111,10 @@ public class EmployeeManagerApp {
         	
         	Employee employee = new Employee(id, firstName, lastName, mobileNumber, emailId, joiningDate, activeStatus);
         	
-        	EmployeeController obj=new EmployeeController();
         	
-        	if(obj.ValidationCheck(employee))
+        	if(controller.ValidationCheck(employee))
         	{
-        		if(obj.inserttoEmployee(employee))
+        		if(controller.inserttoEmployee(employee))
         		{
         			System.out.println("Inserted Successfully");
         		}
@@ -125,6 +127,65 @@ public class EmployeeManagerApp {
         	{
         		System.out.println("Enter Valid Data");
         	}
+        	break;
+        	
+        case 2:
+        	List<Employee> employees=controller.fetchAllEmployees();
+        	
+        	System.out.println("ID\tFirst Name\tLast Name\tMobile Number\tEmail ID\tJoining Date\tActive Status\n");
+        	
+        	for (Employee emp : employees)
+        	{
+        		System.out.println(emp.getId()+'\t'+emp.getFirstName()+'\t'+emp.getLastName()+'\t'+emp.getMobileNumber()
+        		+'\t'+emp.getEmailID()+'\t'+emp.getJoiningDate()+'\t'+emp.getActiveStatus());
+        	}
+        	break;
+        	
+        case 3:
+        	
+        	System.out.println("Enter the ID");
+        	int id3=in.nextInt();
+        	Employee emp=controller.fetchWithId(id3);
+        	System.out.println("ID\tFirst Name\tLast Name\tMobile Number\tEmail ID\tJoining Date\tActive Status\n");
+        	System.out.println(emp.getId()+'\t'+emp.getFirstName()+'\t'+emp.getLastName()+'\t'+emp.getMobileNumber()
+    		+'\t'+emp.getEmailID()+'\t'+emp.getJoiningDate()+'\t'+emp.getActiveStatus());
+        	
+        	break;
+        	
+        case 4:
+        	
+        	
+        	System.out.println("Enter the ID to delete");
+        	int id4=in.nextInt();
+        	if(controller.deletionInEmployee(id4))
+        	{
+        		System.out.println("Deleted employee with ID "+id4);
+        	}
+        	else
+        	{
+        		System.out.println("Deletion Failed");
+        	}
+        	
+        	break;
+        	
+        case 5:
+        	System.out.println("Enter the id of employee to update name");
+        	int id5=in.nextInt();
+        	System.out.println("Enter the new first name and new last name");
+        	String nfirst=in.next();
+        	String nlast=in.next();
+        	if(controller.nameUpdation(id5, nfirst, nlast))
+        	{
+        		System.out.println("Name updation successfull");
+        	}
+        	else
+        	{
+        		System.out.println("Updation failed");
+        	}
+        	break;
+        	
+        default:System.out.println("Wrong Choice");
+        		
         }
 
         in.close();
