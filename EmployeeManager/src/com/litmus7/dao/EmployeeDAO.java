@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.litmus7.employeemanager.util.DatabaseConnectionUtil;
 import com.litmus7.employeemanager.dto.Employee;
+import com.litmus7.employeemanager.constants.SqlConstants;
 
 public class employeeDAO {
 
@@ -24,7 +25,7 @@ public class employeeDAO {
 
     public int createEmployee(Employee emp) {
         try (Connection sqlConn = DatabaseConnectionUtil.getConnection()) {
-            String sql = "INSERT INTO employee(id,firstName,lastName,mobileNumber,emailId,joiningDate,activeStatus) VALUES (?,?,?,?,?,?,?)";
+            String sql =SqlConstants.CreateEmployees;
             PreparedStatement pstmt = sqlConn.prepareStatement(sql);
 
             pstmt.setInt(1, emp.getId());
@@ -47,7 +48,7 @@ public class employeeDAO {
         List<Employee> employees = new ArrayList<>();
 
         try (Connection sqlConn = DatabaseConnectionUtil.getConnection()) {
-            String sqlfetch = "SELECT ?,?,?,?,?,?,? FROM employee";
+            String sqlfetch = SqlConstants.Select_All_without_condition;
             PreparedStatement stmt = sqlConn.prepareStatement(sqlfetch);
             ResultSet rs = stmt.executeQuery(sqlfetch);
 
@@ -69,7 +70,7 @@ public class employeeDAO {
     	Employee emp=null;;
     	
         try (Connection sqlConn = DatabaseConnectionUtil.getConnection()) {
-            String sqlfetch = "SELECT * FROM employee WHERE ID = ?";
+            String sqlfetch = SqlConstants.Select_Employee_By_ID;
             PreparedStatement pstmt = sqlConn.prepareStatement(sqlfetch);
             pstmt.setInt(1, empId);
             ResultSet rs = pstmt.executeQuery();
@@ -89,7 +90,7 @@ public class employeeDAO {
 
     public boolean deleteEmployee(int empId) {
         try (Connection sqlConn = DatabaseConnectionUtil.getConnection()) {
-            String stmt = "DELETE FROM employee WHERE id = ?";
+            String stmt = SqlConstants.Delete_Employee_By_ID;
             PreparedStatement pstmt = sqlConn.prepareStatement(stmt);
             pstmt.setInt(1, empId);
             return pstmt.executeUpdate() > 0;
@@ -102,7 +103,7 @@ public class employeeDAO {
 
     public boolean updateEmployee(int empid, String nFirstName, String nLastName) {
         try (Connection sqlConn = DatabaseConnectionUtil.getConnection()) {
-            String updatestmt = "UPDATE employee SET firstName = ?, lastName = ? WHERE id = ?";
+            String updatestmt =SqlConstants.Update_Employee_Name;
             PreparedStatement pstmt = sqlConn.prepareStatement(updatestmt);
 
             pstmt.setString(1, nFirstName);
