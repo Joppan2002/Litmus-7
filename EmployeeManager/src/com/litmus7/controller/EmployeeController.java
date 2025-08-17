@@ -7,6 +7,7 @@ import com.litmus7.employeemanager.util.TextFileUtil;
 import com.litmus7.employeemanager.util.ValidationUtil;
 import com.litmus7.employeemanager.util.Response;
 import com.litmus7.employeemanager.services.EmployeeService;
+import com.litmus7.employeemanager.constants.errorCode;
 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -85,13 +86,14 @@ public class EmployeeController {
 
     public boolean inserttoEmployee(Employee emp) throws EmployeeServiceException {
         if (emp == null) {
-            throw new EmployeeServiceException("Cannot insert null Employee");
+        	
+            throw new EmployeeServiceException("ErrorCode.EC102",errorCode.EC102, null);
         }
         try {
             employeeservice.addEmployee(emp);
             return true;
         } catch (Exception e) {
-            throw new EmployeeServiceException("Failed to insert employee", e);
+            throw new EmployeeServiceException("ErrorCode.EC103",errorCode.EC103,null);
         }
     }
 
@@ -99,13 +101,13 @@ public class EmployeeController {
         try {
             List<Employee> employees = employeeservice.RetrieveAll().getData();
             if (employees == null || employees.isEmpty()) {
-                throw new EmployeeNotFoundException("No employees found");
+                throw new EmployeeNotFoundException("ErrorCode.EC104",errorCode.EC104);
             }
             return employees;
         } catch (EmployeeNotFoundException e) {
             throw e;
         } catch (Exception e) {
-            throw new EmployeeServiceException("Error fetching all employees", e);
+            throw new EmployeeServiceException("ErrorCode.EC105",errorCode.EC105,null);
         }
     }
 
@@ -113,13 +115,13 @@ public class EmployeeController {
         try {
             Employee emp = employeeservice.RetrieveOne(id).getData();
             if (emp == null) {
-                throw new EmployeeNotFoundException("Employee with ID " + id + " not found");
+                throw new EmployeeNotFoundException("ErrorCode.EC106",errorCode.EC106);
             }
             return emp;
         } catch (EmployeeNotFoundException e) {
             throw e;
         } catch (Exception e) {
-            throw new EmployeeServiceException("Error fetching employee with ID: " + id, e);
+            throw new EmployeeServiceException("ErrorCode.EC107",errorCode.EC107,null);
         }
     }
 
@@ -127,13 +129,13 @@ public class EmployeeController {
         try {
             boolean status = employeeservice.DeleteByID(id).getApplicationStatus();
             if (!status) {
-                throw new EmployeeNotFoundException("Employee with ID " + id + " not found for deletion");
+                throw new EmployeeNotFoundException("ErrorCode.EC108",errorCode.EC108);
             }
             return true;
         } catch (EmployeeNotFoundException e) {
             throw e;
         } catch (Exception e) {
-            throw new EmployeeServiceException("Error deleting employee with ID: " + id, e);
+            throw new EmployeeServiceException("ErrorCode.EC109",errorCode.EC109,null);
         }
     }
 
@@ -141,13 +143,13 @@ public class EmployeeController {
         try {
             boolean status = employeeservice.UpdateName(ID, newFirstName, newLastName).getApplicationStatus();
             if (!status) {
-                throw new EmployeeNotFoundException("Employee with ID " + ID + " not found for name update");
+                throw new EmployeeNotFoundException("ErrorCode.EC110",errorCode.EC110);
             }
             return true;
         } catch (EmployeeNotFoundException e) {
             throw e;
         } catch (Exception e) {
-            throw new EmployeeServiceException("Error updating employee name for ID: " + ID, e);
+            throw new EmployeeServiceException("ErrorCode.EC111",errorCode.EC111,null);
         }
     }
 }
