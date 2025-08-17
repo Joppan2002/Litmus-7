@@ -18,17 +18,18 @@ import com.litmus7.employeemanager.dto.Employee;
 import com.litmus7.employeemanager.exceptions.EmployeeDAOException;
 import com.litmus7.employeemanager.exceptions.EmployeeNotFoundException;
 import com.litmus7.employeemanager.constants.SqlConstants;
+import com.litmus7.employeemanager.constants.errorCode;
 
 
 public class employeeDAO {
 
-    public employeeDAO() {
-        try (Connection sqlConn = DatabaseConnectionUtil.getConnection()) {
-            System.out.println("Connection Successful");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+//    public employeeDAO() throws EmployeeDAOException {
+//        try (Connection sqlConn = DatabaseConnectionUtil.getConnection()) {
+//            System.out.println("Connection Successful");
+//        } catch (SQLException e) {
+//            throw new EmployeeDAOException("Cannot Connect with Database",errorCode.DB,e);
+//        }
+//    }
 
     public int createEmployee(Employee emp)throws EmployeeDAOException {
         try (Connection sqlConn = DatabaseConnectionUtil.getConnection()) {
@@ -47,7 +48,7 @@ public class employeeDAO {
 
         } catch (SQLException e) 
         {
-        	throw new EmployeeDAOException("Error occured at EmployeeDAO Layer while creating employee",e);
+        	throw new EmployeeDAOException("ErrorCode.DB",errorCode.DB,e);
         }
     }
 
@@ -66,7 +67,7 @@ public class employeeDAO {
             }
 
         } catch (SQLException e) {
-        	throw new EmployeeDAOException("Error occured at EmployeeDAO Layer while fetching all employees",e);
+        	throw new EmployeeDAOException("ErrorCode.DB",errorCode.DB,e);
         }
 
         return employees;
@@ -89,13 +90,13 @@ public class employeeDAO {
             }
             if(emp==null)
             {
-            	throw new EmployeeNotFoundException("Couldn't find the employee");
+            	throw new EmployeeNotFoundException("ErrorCode.EC106",errorCode.EC106);
             }
 
         }
         catch (SQLException e) 
         {
-            throw new EmployeeDAOException("Error occurred at EmployeeDAO Layer while fetching employee with ID: " + empId, e);
+            throw new EmployeeDAOException("ErrorCode.DB",errorCode.DB,e);
         }
         
         return emp;
@@ -111,7 +112,7 @@ public class employeeDAO {
             return pstmt.executeUpdate() > 0;
 
         } catch (SQLException e) {
-            throw new EmployeeDAOException("Error occurred at EmployeeDAO Layer while deleting employee with ID: " + empId, e);
+            throw new EmployeeDAOException("ErrorCode.DB",errorCode.DB,e);
         }
     }
 
@@ -125,11 +126,11 @@ public class employeeDAO {
             pstmt.setString(2, nLastName);
             pstmt.setInt(3, empid);
 
-            return pstmt.executeUpdate() > 0;
+            return pstmt.executeUpdate()> 0;
 
         }
         catch (SQLException e) {
-            throw new EmployeeDAOException("Error updating name at EmployeeDAO Layer", e);
+            throw new EmployeeDAOException("ErrorCode.DB",errorCode.DB,e);
         }
     }
 }
