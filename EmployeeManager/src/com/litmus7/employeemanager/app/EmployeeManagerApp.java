@@ -1,89 +1,88 @@
 package com.litmus7.employeemanager.app;
 
-import com.litmus7.employeemanager.controller.*;
-import com.litmus7.employeemanager.dto.Employee;
-import com.litmus7.exceptions.EmployeeNotFoundException;
-import com.litmus7.exceptions.EmployeeServiceException;
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+
+import com.litmus7.employeemanager.controller.EmployeeController;
+import com.litmus7.employeemanager.dto.Employee;
+import com.litmus7.employeemanager.exceptions.EmployeeNotFoundException;
+import com.litmus7.employeemanager.exceptions.EmployeeServiceException;
+
 
 
 
 public class EmployeeManagerApp {
     public static void main(String args[]) throws IOException, EmployeeServiceException, EmployeeNotFoundException {
         Scanner in = new Scanner(System.in);
-        int ch;
-
-        System.out.println("Enter the phase to execute");
-        System.out.println("1. Employee Data Ingestion & Console Display");
-        System.out.println("2. Data Transformation & CSV Export");
-        System.out.println("3. Interactive Data Entry & Appending");
-        ch = in.nextInt();
-
-        switch (ch) {
-            case 1: {
-                EmployeeController obj1 = new EmployeeController();
-                String res = obj1.getEmployeeDataFromTextFile("C:\\Users\\ACER\\OneDrive\\Documents\\Litmus 7 assignments\\Java Assignment 1_Augustine Joel Joseph\\datafile.txt");
-                System.out.println(res);
-                break;
-            }
-
-            case 2: {
-                EmployeeController obj2 = new EmployeeController();
-                String res2 = obj2.writeEmployeeDatatoCSV("C:\\Users\\ACER\\OneDrive\\Documents\\Litmus 7 assignments\\Java Assignment 1_Augustine Joel Joseph\\datafile.txt", "outputFile.csv");
-                System.out.println(res2);
-                break;
-            }
-
-            case 3: {
-                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-
-                System.out.println("Enter the ID");
-                int id = Integer.parseInt(br.readLine());
-
-                System.out.println("Enter the First Name");
-                String firstName = br.readLine();
-
-                System.out.println("Enter the Last Name");
-                String lastName = br.readLine();
-
-                System.out.println("Enter the Mobile Number");
-                String mobileNumber = br.readLine();
-
-                System.out.println("Enter the Email ID");
-                String emailID = br.readLine();
-
-                System.out.println("Enter the Joining Date (YYYY-MM-DD)");
-                String joiningDate = br.readLine();
-
-                System.out.println("Enter the Active Status (true/false)");
-                String activeStatus = br.readLine();
-
-                // Create Employee object
-                Employee emp = new Employee(id, firstName, lastName, mobileNumber, emailID, joiningDate, activeStatus);
-
-                EmployeeController ob3 = new EmployeeController();
-
-                String outputFilePath = "outputFile.csv";
-                String result = ob3.checkValidity(emp, outputFilePath);
-
-                System.out.println(result);
-                break;
-            }
-
-            default:
-                System.out.println("Invalid Choice");
-        }
+//        int ch;
+//
+//        System.out.println("Enter the phase to execute");
+//        System.out.println("1. Employee Data Ingestion & Console Display");
+//        System.out.println("2. Data Transformation & CSV Export");
+//        System.out.println("3. Interactive Data Entry & Appending");
+//        ch = in.nextInt();
+//
+//        switch (ch) {
+//            case 1: {
+//                EmployeeController obj1 = new EmployeeController();
+//                String res = obj1.getEmployeeDataFromTextFile("C:\\Users\\ACER\\OneDrive\\Documents\\Litmus 7 assignments\\Java Assignment 1_Augustine Joel Joseph\\datafile.txt");
+//                System.out.println(res);
+//                break;
+//            }
+//
+//            case 2: {
+//                EmployeeController obj2 = new EmployeeController();
+//                String res2 = obj2.writeEmployeeDatatoCSV("C:\\Users\\ACER\\OneDrive\\Documents\\Litmus 7 assignments\\Java Assignment 1_Augustine Joel Joseph\\datafile.txt", "outputFile.csv");
+//                System.out.println(res2);
+//                break;
+//            }
+//
+//            case 3: {
+//                BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+//
+//                System.out.println("Enter the ID");
+//                int id = Integer.parseInt(br.readLine());
+//
+//                System.out.println("Enter the First Name");
+//                String firstName = br.readLine();
+//
+//                System.out.println("Enter the Last Name");
+//                String lastName = br.readLine();
+//
+//                System.out.println("Enter the Mobile Number");
+//                String mobileNumber = br.readLine();
+//
+//                System.out.println("Enter the Email ID");
+//                String emailID = br.readLine();
+//
+//                System.out.println("Enter the Joining Date (YYYY-MM-DD)");
+//                String joiningDate = br.readLine();
+//
+//                System.out.println("Enter the Active Status (true/false)");
+//                String activeStatus = br.readLine();
+//
+//                // Create Employee object
+//                Employee emp = new Employee(id, firstName, lastName, mobileNumber, emailID, joiningDate, activeStatus);
+//
+//                EmployeeController ob3 = new EmployeeController();
+//
+//                String outputFilePath = "outputFile.csv";
+//                String result = ob3.checkValidity(emp, outputFilePath);
+//
+//                System.out.println(result);
+//                break;
+//            }
+//
+//            default:
+//                System.out.println("Invalid Choice");
+//        }
         
         
         //second part
         
-        System.out.println("1.Add to employee table"
+        
+        System.out.println("1.Add to employee tables"
         		+ "\n2.Retrieve all employee details"
         		+ "\n3.Retrieve employee with specific ID"
         		+ "\n4.Delete from employee table"
@@ -138,7 +137,7 @@ public class EmployeeManagerApp {
         	
         	for (Employee emp : employees)
         	{
-        		System.out.println(emp.getId()+'\t'+emp.getFirstName()+'\t'+emp.getLastName()+'\t'+emp.getMobileNumber()
+        		System.out.println(emp.getId()+"\t"+emp.getFirstName()+'\t'+emp.getLastName()+'\t'+emp.getMobileNumber()
         		+'\t'+emp.getEmailID()+'\t'+emp.getJoiningDate()+'\t'+emp.getActiveStatus());
         	}
         	break;
