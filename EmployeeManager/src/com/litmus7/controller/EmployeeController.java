@@ -1,18 +1,17 @@
 package com.litmus7.employeemanager.controller;
 
 import com.litmus7.employeemanager.dto.Employee;
+import com.litmus7.employeemanager.exceptions.EmployeeNotFoundException;
+import com.litmus7.employeemanager.exceptions.EmployeeServiceException;
 import com.litmus7.employeemanager.util.TextFileUtil;
 import com.litmus7.employeemanager.util.ValidationUtil;
 import com.litmus7.employeemanager.util.Response;
 import com.litmus7.employeemanager.services.EmployeeService;
-import com.litmus7.exceptions.EmployeeNotFoundException;
-import com.litmus7.exceptions.EmployeeServiceException;
 
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeController {
@@ -41,7 +40,8 @@ public class EmployeeController {
         return obj2.getMessage();
     }
 
-    public String checkValidity(Employee emp, String outputFilePath) {
+    public String checkValidity(Employee emp, String outputFilePath) 
+    {
         String validationStatus = ValidationUtil.validateEmployee(emp);
         
 
@@ -76,14 +76,11 @@ public class EmployeeController {
     
  // second part
 
-    EmployeeService service = new EmployeeService();
+    EmployeeService employeeservice = new EmployeeService();
 
-    public Boolean ValidationCheck(Employee emp) throws EmployeeServiceException {
-        try {
-            return ValidationUtil.validateEmployee(emp).equalsIgnoreCase("valid");
-        } catch (Exception e) {
-            throw new EmployeeServiceException("Error validating employee data", e);
-        }
+    public Boolean ValidationCheck(Employee emp)
+    {
+        return ValidationUtil.validateEmployee(emp).equalsIgnoreCase("valid");
     }
 
     public boolean inserttoEmployee(Employee emp) throws EmployeeServiceException {
@@ -91,7 +88,7 @@ public class EmployeeController {
             throw new EmployeeServiceException("Cannot insert null Employee");
         }
         try {
-            service.addEmployee(emp);
+            employeeservice.addEmployee(emp);
             return true;
         } catch (Exception e) {
             throw new EmployeeServiceException("Failed to insert employee", e);
@@ -100,7 +97,7 @@ public class EmployeeController {
 
     public List<Employee> fetchAllEmployees() throws EmployeeServiceException, EmployeeNotFoundException {
         try {
-            List<Employee> employees = service.RetrieveAll().getData();
+            List<Employee> employees = employeeservice.RetrieveAll().getData();
             if (employees == null || employees.isEmpty()) {
                 throw new EmployeeNotFoundException("No employees found");
             }
@@ -114,7 +111,7 @@ public class EmployeeController {
 
     public Employee fetchWithId(int id) throws EmployeeServiceException, EmployeeNotFoundException {
         try {
-            Employee emp = service.RetrieveOne(id).getData();
+            Employee emp = employeeservice.RetrieveOne(id).getData();
             if (emp == null) {
                 throw new EmployeeNotFoundException("Employee with ID " + id + " not found");
             }
@@ -128,7 +125,7 @@ public class EmployeeController {
 
     public boolean deletionInEmployee(int id) throws EmployeeServiceException, EmployeeNotFoundException {
         try {
-            boolean status = service.DeleteByID(id).getApplicationStatus();
+            boolean status = employeeservice.DeleteByID(id).getApplicationStatus();
             if (!status) {
                 throw new EmployeeNotFoundException("Employee with ID " + id + " not found for deletion");
             }
@@ -142,7 +139,7 @@ public class EmployeeController {
 
     public boolean nameUpdation(int ID, String newFirstName, String newLastName) throws EmployeeServiceException, EmployeeNotFoundException {
         try {
-            boolean status = service.UpdateName(ID, newFirstName, newLastName).getApplicationStatus();
+            boolean status = employeeservice.UpdateName(ID, newFirstName, newLastName).getApplicationStatus();
             if (!status) {
                 throw new EmployeeNotFoundException("Employee with ID " + ID + " not found for name update");
             }
