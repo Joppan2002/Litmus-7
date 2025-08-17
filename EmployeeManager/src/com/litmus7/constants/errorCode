@@ -1,0 +1,47 @@
+package com.litmus7.employeemanager.constants;
+
+public class errorCode 
+{
+	errorCode()
+	{
+		
+	}
+	public static final String EC101="Data Not Valid";
+	public static final String EC102="Data Cannot Be Empty";
+	public static final String EC103="Insertion Failed";
+	
+	
+	public static final String EC104="Employee Table Empty";
+	public static final String EC105="Error Fetching all Employee Details";
+	
+	
+	public static final String EC106="Employee with that ID not found";
+	public static final String EC107="Error Fetching details of the specified Employee ID";
+	
+	
+	public static final String EC108="Employee ID not found for deletion";
+	public static final String EC109="Error deleting";
+	
+	
+	public static final String EC110="Employee ID not found for name updation";
+	public static final String EC111="Error updating name";
+	
+	
+	public static final String ES101="Employee Creation Failed";
+	
+	
+	public static final String ES102="Whole Employee Retrieval Failed";
+	
+	
+	public static final String ES103="Employee Fetching Failed";
+	
+	
+	public static final String ES104="Employee Deletion Failed";
+	
+	
+	public static final String ES105="Employee Name Updation Failed";
+	
+	
+	public static final String DB="Cannot Connect with the DataBase";
+	
+}
